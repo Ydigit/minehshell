@@ -30,23 +30,35 @@ int main ()
   return 0;
 }
 
-
-
+  /*           /*
+    * BULD In
+  */           
 
 int builtin (char **args)
 {
   /* Toda a funcionalidade embutida deverá devolver 1*/
+  //get out
   if (strcmp (args[0], "sair") == 0)
   {
     exit (0);
     return 1; /* funcionalidade embutida */
   }
+
   if (strncmp (args[0], "42", 2) == 0)
   {
     printf("42 is the answer to life the universe and everything\n");
-    printf("https://pt.wikipedia.org/wiki/The_Hitchhiker's_Guide_to_the_Galaxy\n");
+    printf("...\n");
     return 1;/* funcionalidade embutida */
   }
+
+if (strncmp (args[0], "devgit", 6) == 0)
+{
+    printf("Check more on \n");
+    printf("****************************\n");
+    printf("* https://github.com/Ydigit*\n");
+    printf("****************************\n");
+    return 1; /* funcionalidade embutida */
+}
 
   if( 0==strcmp(args[0], "obterinfo") ){
     printf("SoShell 2024 versaõ 1.0\n");
@@ -80,7 +92,7 @@ int builtin (char **args)
   }
 
 
-
+//username
   if( strlen(args[0])>4 && strlen(args[0])<102 && 0==strncmp(args[0], "PS1=",4) ){ //max 102 porcausa dos 98 * os 4
     strcpy(prompt,args[0]+4);
     prompt[strlen(args[0]+4)] = ' ';
@@ -88,14 +100,21 @@ int builtin (char **args)
     return 1 ; //comando embutido
   }
 
+
+//copy com o socp
     if( 0==strcmp(args[0], "socp") ){
     if(args[1]==NULL || args[2]==NULL){
-      printf("uso-> socp ent sai\n");
+      printf("uso-> socp enrada ->t sadai\n");
     }else{
-      socp(args[2], args[1]);
+      socp(args[2], args[1]);// o 2 e o destino e o 1 e a source 
     }
     return 1; //comando embutido
   }
+  //segundo plano background
+
+
+
+  //
 
   /* IMPORTANTE : 
    Devolver 0 para indicar que não existe comando embutido e que
