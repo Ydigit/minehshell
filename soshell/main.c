@@ -30,6 +30,9 @@ int main ()
   return 0;
 }
 
+
+
+
 int builtin (char **args)
 {
   /* Toda a funcionalidade embutida deverá devolver 1*/
@@ -56,13 +59,27 @@ int builtin (char **args)
 
   if (0 == strcmp(args[0], "cd")) {
     int err;
-    if(args[1] == NULL || strcmp(args[1], "~") == 0 || strcmp(args[1], "$HOME")==0)
-      err=chdir( getenv("HOME") ) ;
-    else
-    err = chdir( args[1] );
-    if (err<0) perror ( args[1]);
+    char * guardadir[255];
+    char * guardadiremtraco[255];
+
+    if(args[1] == NULL || strcmp(args[1], "~") == 0 || strcmp(args[1], "$HOME")==0){
+      getcwd(guardadir, 255);
+      err=chdir( getenv("HOME") ) ;//entra
+    }
+    else if(strcmp(args[1],"-")==0){//se for vou ter de dar ch em anterior
+      //getcwd(guardadiremtraco, 255);
+      err=chdir(guardadir);
+      }
+      else{
+      getcwd(guardadir,255);//guarda atual em guardadir
+      err = chdir( args[1] );//entra na diretoria do arg1
+    }
+
+    if (err<0) perror ( args[1]);//menor que zero e invalid
       return 1 ; //comando embutido
   }
+
+
 
   if( strlen(args[0])>4 && strlen(args[0])<102 && 0==strncmp(args[0], "PS1=",4) ){ //max 102 porcausa dos 98 * os 4
     strcpy(prompt,args[0]+4);
