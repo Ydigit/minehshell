@@ -30,7 +30,7 @@ int main ()
   return 0;
 }
 
-  /*           /*
+  /*           
     * BULD In
   */           
 
@@ -71,8 +71,8 @@ if (strncmp (args[0], "devgit", 6) == 0)
 
   if (0 == strcmp(args[0], "cd")) {
     int err;
-    char * guardadir[255];
-    char * guardadiremtraco[255];
+    char *guardadir = "~";
+    //char *guardadiremtraco[255];
 
     if(args[1] == NULL || strcmp(args[1], "~") == 0 || strcmp(args[1], "$HOME")==0){
       getcwd(guardadir, 255);
@@ -110,7 +110,35 @@ if (strncmp (args[0], "devgit", 6) == 0)
     }
     return 1; //comando embutido
   }
-  //segundo plano background
+
+  //check if equals
+//check if equals
+if(0 == strcmp(args[0],"compare2txt")){
+  if(args[1]==NULL || args[2]==NULL){
+    perror("no files no equals..\n");
+    exit(0);
+  }
+  else{
+    compare2txt(args[1], args[2]);
+  }
+  return 1;//embutido
+}
+//linhax e o 
+//int numargs = parse();
+
+
+
+
+/*
+  int i=0;
+  while(args[i]!=NULL){
+    i++;
+  }
+  if ( 0 == strcmp(args[0], "calc")&& i==3) {
+      calc(args[1],args[2],args[3]);
+ return 1 ; //comando embutido
+  }
+*/
 
 
 

@@ -8,9 +8,11 @@
 #include <pthread.h>
 #include <ctype.h>
 #include <sys/wait.h>
-
+#include <stdbool.h>
+#include <math.h>
 #define BUFFSIZE 128
 #define FILE_MODE ( S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+
 
 void parse(char *buf, char **args);
 
@@ -21,6 +23,11 @@ int builtin (char **args);
 void socp(char *fonte, char *destino) ;
 
 void ioCopy(int IN,int OUT);
+
+bool justsee(int entrada1, int entrada2);
+
+bool compare2txt(char *INONE, char *INTWO);
+
 
 /* constantes que podem tornar uteis*/
 
