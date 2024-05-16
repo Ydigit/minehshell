@@ -10,7 +10,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm
-OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o
+OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o redirect.o threads.o
 
 
 
@@ -31,6 +31,10 @@ compare2txt.o : shell.h compare2txt.c
 	$(CC) $(FLAGS) compare2txt.c
 calc.o : shell.h calc.c
 	$(CC) $(FLAGS) calc.c
+redirect.o : shell.h redirect.c
+	$(CC) $(FLAGS) redirect.c
+threads.o : shell.h threads.c
+	$(CC) $(FLAGS) threads.c
 clean limpar:
 	rm -f soshell *.o
 	rm -f *~

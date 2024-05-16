@@ -8,7 +8,7 @@ int main ()
   char linha[1024];/* um comando */
   char *args[64];/* com um maximo de 64 argumentos */
 
-  strcpy (prompt, "SOSHELL: Introduza um comando : prompt>");
+  strcpy (prompt, "SHELL do LEO: Espeta ai um comando : $>");
   while (1)
   {
     printf ("%s", prompt);
@@ -22,10 +22,10 @@ int main ()
       continue;/* linha é apenas \n */
     if (linha[len - 1] == '\n')
       linha[len - 1] = '\0';
-    parse (linha, args);/* particiona a string em argumentos */
+    int numargs = parse(linha, args);/* particiona a string em argumentos */
 
     if (!builtin (args))
-      execute (args);/* executa o comando */
+      execute( numargs, args );/* executa o comando */
     }
   return 0;
 }
@@ -111,7 +111,6 @@ if (strncmp (args[0], "devgit", 6) == 0)
     return 1; //comando embutido
   }
 
-  //check if equals
 //check if equals
 if(0 == strcmp(args[0],"compare2txt")){
   if(args[1]==NULL || args[2]==NULL){
@@ -123,22 +122,53 @@ if(0 == strcmp(args[0],"compare2txt")){
   }
   return 1;//embutido
 }
-//linhax e o 
-//int numargs = parse();
 
 
 
-
+//calc
 /*
-  int i=0;
+  int i=1;// indice de array
+  int conta=0;
   while(args[i]!=NULL){
     i++;
+    conta++;
   }
-  if ( 0 == strcmp(args[0], "calc")&& i==3) {
+
+  if ( 0 == strcmp(args[0], "calc") && conta==3) {
       calc(args[1],args[2],args[3]);
- return 1 ; //comando embutido
+      return 1 ;
   }
-*/
+    else{
+      printf("\n!!!!usage type error != -> <calc><value1> <operando> <value2>!!!!\n\n");
+    return 1;
+    }
+  */
+    //calcula
+    int i=0;
+    while(args[i]!=NULL){
+      i++;
+    }
+    if ( 0 == strcmp(args[0], "calc")&& i==3) {
+        calc(args[1],args[2],args[3]);
+        return 1 ; //comando embutido
+    }
+    
+    //aviso
+    //obj sera passar o meu argumento de args para cada thread para cada funcao
+    if (strcmp (args[0], "aviso")==0 ) {
+      pthread_t onlythread;
+      //primeira execucao com thread, e segunda sem thread
+      pthread_create(&onlythread, NULL, avisowrapper, (void *)args);
+      aviso( args[1], atoi ( args[2] ) ) ;
+      return 1;
+    }
+
+
+
+
+
+
+  
 
 
 

@@ -1,31 +1,37 @@
 #include "shell.h"
 
-void calc (char *op1,char *op, char*op2){
-    float num1 = atof(op1);
-    float num2 = atof(op2);
-    float result;
+void calc(char *value1,char *op, char*value2){
+    float valor1 = atof(value1);
+    float valor2 = atof(value2);
+    float resultado;
 
-    if (strcmp(op, "+")==0) {
-        result = num1 + num2;
-    } else if (strcmp(op, "-")==0) {
-        result = num1 - num2;
-    } else if (strcmp(op, "*")==0) {
-        result = num1 * num2;
-    }else if (strcmp(op, "^")==0){
-         powf(num1,num2); 
-    } else if (strcmp(op, "/")==0) {
-    
-        if (num2 != 0) {
-            result = num1 / num2;
-        } else {
-            printf("Erro divisao por 0\n");
+    if (strncmp(op, "+", 1)==0) {
+        
+        resultado = valor1 + valor2;
+    } else if (strncmp(op, "-",1)==0) {
+
+        resultado = valor1 - valor2;
+
+    } else if (strncmp(op, "*",1)==0) {
+
+        resultado =valor1 * valor2;
+
+    }else if (strncmp(op, "^",1)==0){
+
+        resultado = powf(valor1,valor2); //operacao de exponenecial
+        
+    } else if (strncmp(op, "/",1)==0) {
+
+        if (valor2 == 0) {
+            printf("\nErro! segundo elemento da divisao nao pode ser 0!\n\n");
             return;
+            
+        } else {
+            resultado = valor1 / valor2;
         }
-    } else {
-        printf("\n");
-        return;
+    }else{
+        printf("\n\n!!!Operacao ilegal, chamem a gnr!\n\n");
     }
-
-    printf("Resulto = %.6f\n", result);
+    printf("Resultado da operacao = %.6f\n", resultado);
 }
 
