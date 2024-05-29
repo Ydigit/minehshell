@@ -1,9 +1,23 @@
 #include "shell.h"
 
-
-
 //mudar o kaefile
 //o destino no inicioe a source no
+
+/* IN case of buffspec is neededd!
+void ioCopythread(int IN, int OUT, int buffsize)
+{
+    int n;
+    char buf[buffsize];
+    while ((n = read(IN, buf, buffsize)) > 0)
+    {
+        if (write(OUT, buf, n) != n)
+            perror("Erro de escrita!\n");
+    }
+    if (n < 0)
+        perror("Erro de leitura!\n");
+}
+*/
+
 void ioCopy(int IN, int OUT)
 {
     {

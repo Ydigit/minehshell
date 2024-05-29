@@ -10,8 +10,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm
-OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o redirect.o threads.o
-
+OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o
 
 
 #Alvo por defeito é o primeiro
@@ -35,7 +34,16 @@ redirect.o : shell.h redirect.c
 	$(CC) $(FLAGS) redirect.c
 threads.o : shell.h threads.c
 	$(CC) $(FLAGS) threads.c
+ficheirosinfo.o : shell.h ficheirosinfo.c
+	$(CC) $(FLAGS) ficheirosinfo.c
+filefunctions.o : shell.h filefunctions.c
+	$(CC) $(FLAGS) filefunctions.c
+music.o : shell.h music.c
+	$(CC) $(FLAGS) music.c
+
+
+
 clean limpar:
 	rm -f soshell *.o
 	rm -f *~
-	echo "Limpeza dos ficheiros exectuaveis, objectos e gedit tralha"
+	echo "Limpeza dos ficheiros exectuaveis, objectos e limpeza de tralha"
