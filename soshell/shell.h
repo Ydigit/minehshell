@@ -10,10 +10,12 @@
 #include <sys/wait.h>
 #include <stdbool.h>//mudar isto
 #include <math.h>
-#include <pthread.h>
 #include <time.h>
 #include <dirent.h>
 #include <limits.h>
+#include <sys/mman.h>
+#include <semaphore.h>
+#include <openssl/sha.h>
 
 
 
@@ -28,6 +30,8 @@
 #define NUM_PASSWORDS 10
 #define PASSWORD_LENGTH 8
 
+#define NUM_BLOCKS 5
+
 
 typedef struct
     { char msg[100] ;
@@ -39,12 +43,25 @@ typedef struct {
     //int buffsize;
 } copiar_t;
 
+typedef struct {
+    int index;
+    time_t timestamp;
+    char data[256];
+    char prev_hash[65];
+    char hash[65];
+} Block;
 
+typedef struct {
+    Block blocks[NUM_BLOCKS];
+    int size;
+} Blockchain;
 
 
 int parse(char *buf, char **args);
 
 void execute(int numargs, char **args);
+
+int redirects(int numargs, char *args[]);
 
 int builtin (char **args);
 
@@ -61,6 +78,8 @@ void calc(char *value1,char *op, char*value2);
 int dupAndClose(int oldFd, int newFd, int argc, char **argv);
 
 int redir(int numargs, char *args[]);
+
+int count_args(char **args);
 
 void aviso (char *mesg, int tempo);
 
@@ -94,6 +113,22 @@ void gerapassharmonia(const char* file);
 void gerapass12(const char *file, const char *password);
 
 void descodificar12(const char *file);
+
+void decode_nota(char *nota, char *notas[]);
+
+//---------------------BLOCKCHAIN-----------------------
+
+void sha256(char* string, char outputBuffer[65]);
+
+void create_block(Block* block, int index, const char* data, const char* prev_hash);
+
+void add_block(Blockchain* blockchain, Block* new_block);
+
+void display_blockchain(Blockchain* blockchain);
+
+void child_process(Blockchain* blockchain, sem_t* sem, int index);
+
+void simulate_blockchain();
 
 #define BG 0
 #define FG 1

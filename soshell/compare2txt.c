@@ -1,12 +1,26 @@
+/**
+ * @file compare2txt.c
+ * @brief A program to compare two text files.
+ */
+
 #include "shell.h"
 
-
+/**
+ * @brief A function that reads two file descriptors and compares their content.
+ * 
+ * This function reads from two file descriptors in chunks of BUFFSIZE. If the size of the chunks or the content differs, it returns false.
+ * 
+ * @param entrada1 The first file descriptor.
+ * @param entrada2 The second file descriptor.
+ * 
+ * @return true if the content of the files is identical, false otherwise.
+ */
 bool justsee(int entrada1, int entrada2) {
     int n, m;
     char buf[BUFFSIZE], buf2[BUFFSIZE];
 
     while ((n = read(entrada1, buf, BUFFSIZE)) > 0 && (m = read(entrada2, buf2, BUFFSIZE)) > 0) {
-        if (n != m || memcmp(buf, buf2, n) != 0) {
+        if (n != m || memcmp(buf, buf2, n) != 0) { //memory byte compare
             return false;
         }
     }
@@ -19,7 +33,17 @@ bool justsee(int entrada1, int entrada2) {
     return true;
 }
 
- bool compare2txt(char * INONE, char *INTWO){//devo ter 
+/**
+ * @brief A function that opens two files and compares their content.
+ * 
+ * This function opens two files and uses the justsee function to compare their content.
+ * 
+ * @param INONE The path to the first file.
+ * @param INTWO The path to the second file.
+ * 
+ * @return true if the content of the files is identical, false otherwise.
+ */
+bool compare2txt(char * INONE, char *INTWO){
     int fd1;
     int fd2;
     bool estadof;
@@ -44,5 +68,4 @@ bool justsee(int entrada1, int entrada2) {
         printf("You are having a laugh..\n");
         return false;
     }
-
 }

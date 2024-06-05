@@ -7,13 +7,12 @@
 #
 # Variaveis: Compiler, compiler flags, libraries to link, name of of object files
 #
+
 CC=cc
 FLAGS=-c -Wall
-LIBS=-lm
-OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o
+LIBS=-lm #-lssl -lcrypto   # Adiciona as bibliotecas OpenSSL
+OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o #blockchain.o
 
-
-#Alvo por defeito é o primeiro
 all :  soshell
 
 main.o : shell.h main.c
@@ -40,6 +39,9 @@ filefunctions.o : shell.h filefunctions.c
 	$(CC) $(FLAGS) filefunctions.c
 music.o : shell.h music.c
 	$(CC) $(FLAGS) music.c
+#blockchain.o : shell.h blockchain.c
+#	$(CC) $(FLAGS) blockchain.c -lm -lssl -lcrypto
+
 
 
 

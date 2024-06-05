@@ -1,41 +1,54 @@
-/*
-   execute . cria um processo prog�nito e executa um programa
-*/
+/**
+ * @file execute.c
+ * @brief A program to create a child process and execute a program.
+ */
+
 #include "shell.h"
 #include <sys/wait.h>
 
+/**
+ * @brief Creates a child process and executes a program.
+ * 
+ * This function creates a child process using fork(). If the process is the child process, 
+ * it attempts to replace the current program with the one specified in args using execvp(). 
+ * If execvp() fails, it prints an error message and exits. If the process is the parent, 
+ * it waits for the child process to finish using wait().
+ * 
+ * @param numargs The number of arguments.
+ * @param args The arguments.
+ */
 void execute(int numargs, char **args)
 {
   int pid, status;
 
   if ((pid = fork()) < 0)
-  {                  /* cria um processo progenito */
-    perror("forks"); /* NOTE: perror() produz uma pequema mensagem de erro para o stream */
-    exit(1);         /* estandardizado de erros que descreve o ultimo erro encontrado */
-                     /* durante uma chamada ao sistema ou funcao duma biblioteca */
+  {
+    perror("forks");
+    exit(1);
   }
 
   if (pid == 0)
   {
-    //numargs = redir(numargs, args);
-    //if(numargs<-1)
-      //exit(1);
+    //neste
+    numargs = redirects(numargs, args);
+    execvp(*args, args);
+    perror(*args);
+    exit(1);
+  }
 
-    execvp(*args, args); /* NOTE: as versoes execv() e
-                          * execvp() de execl() sao uteis quando */
-    perror(*args);       /* o numero de argumentos nao e. conhecido.
-                          * Os argumentos de  */
-    exit(1);             /* execv() e execvp() sao o nome do ficheiro
-                          * a ser executado e um */
-  }                      /* vector de strings que contem os
-                          * argumentos. O ultimo argument */
-
-  while (wait(&status) != pid)
-    /*spin fazer nada */;
+  while (wait(&status) != pid);
 
   return;
 }
 
+/**
+ * @brief Checks if a file descriptor is valid.
+ * 
+ * This function checks if a file descriptor is valid (i.e., not negative). 
+ * If the file descriptor is invalid, it prints an error message and exits.
+ * 
+ * @param fd The file descriptor to check.
+ */
 void checkfd(int fd)
 {
   if (fd < 0)
@@ -44,9 +57,22 @@ void checkfd(int fd)
     exit(0);
   }
 }
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//em caso de execute
-/*
+
+/**
+ * @brief Trata dos redirecionamentos de entrada e saída em um comando.
+ * 
+ * @param numargs O número de argumentos no comando.
+ * @param args Os argumentos do comando.
+ * 
+ * Esta função verifica se o penúltimo argumento do comando é um operador de redirecionamento ("2>", ">", ">>" ou "<").
+ * Se for, ela abre ou cria o arquivo especificado no último argumento e redireciona a saída de erro, a saída padrão ou a entrada padrão para esse arquivo, conforme especificado pelo operador de redirecionamento.
+ * Em seguida, ela remove o operador de redirecionamento e o nome do arquivo dos argumentos do comando e atualiza o número de argumentos.
+ * 
+ * @return O número atualizado de argumentos no comando.
+ */
+
 int redirects(int numargs, char *args[])
 {
 
@@ -95,7 +121,7 @@ int redirects(int numargs, char *args[])
 
   return numargs;
 }
-*/
+
 
 // dup pega o file descirptor mais baixo do sistema
 // com o dup2 garanto que  o que quero vai ser o novo file descriptor
