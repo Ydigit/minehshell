@@ -1,0 +1,45 @@
+ls
+ls
+ls
+historic
+cd
+ls
+ls
+ls
+cd
+ls
+historic
+ls
+ls
+ls
+historic
+execute_from_history 1
+make cleran
+ls
+cd tstedir
+cd testedir
+historic
+execute_from_history 21
+historic
+execute_from_historic 18
+historic
+ls -l | grep "file"
+ls -l | grep "README"
+ls -l | grep "a"
+ls
+ls
+ls
+historic
+ls
+socp 1.sh cenas.prof
+ls
+cat cenas.prof
+cd
+ls
+rm -rf cenas.prof
+ls
+historic
+execiute_from_historic 34
+execute_from_historic 34
+ls
+cat cenas.prof

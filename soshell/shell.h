@@ -27,6 +27,8 @@
 #define PATH_MAX 4096
 #endif
 
+
+
 #define NUM_PASSWORDS 10
 #define PASSWORD_LENGTH 8
 
@@ -75,6 +77,8 @@ bool compare2txt(char *INONE, char *INTWO);
 
 void calc(char *value1,char *op, char*value2);
 
+void bits(char op1, char *op, char *op2);
+
 int dupAndClose(int oldFd, int newFd, int argc, char **argv);
 
 int redir(int numargs, char *args[]);
@@ -106,6 +110,22 @@ void sext(const char* filename);
 void removerleitura(const char* filename);
 
 void sols(const char* directory_name);
+
+int isjpg ( int fileDescriptor );
+
+
+
+
+
+//***************************** */
+
+void add_to_history(const char *command);
+void print_history();
+void execute_command_from_history(int n);
+void process_command(char *command);
+
+
+void execute_pipe(char **args1, char **args2);
 
 //--------------------music------------------
 void gerapassharmonia(const char* file);

@@ -10,8 +10,8 @@
 
 CC=cc
 FLAGS=-c -Wall
-LIBS=-lm #-lssl -lcrypto   # Adiciona as bibliotecas OpenSSL
-OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o #blockchain.o
+LIBS=-lm -lpthread #-lssl -lcrypto   # Adiciona as bibliotecas OpenSSL
+OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o calcularbits.o isjpg.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o historic.o pipe.o #isjpeg.o #blockchain.o
 
 all :  soshell
 
@@ -29,6 +29,8 @@ compare2txt.o : shell.h compare2txt.c
 	$(CC) $(FLAGS) compare2txt.c
 calc.o : shell.h calc.c
 	$(CC) $(FLAGS) calc.c
+calcularbits.o : shell.h calcularbits.c
+	$(CC) $(FLAGS) calcularbits.c
 redirect.o : shell.h redirect.c
 	$(CC) $(FLAGS) redirect.c
 threads.o : shell.h threads.c
@@ -39,6 +41,12 @@ filefunctions.o : shell.h filefunctions.c
 	$(CC) $(FLAGS) filefunctions.c
 music.o : shell.h music.c
 	$(CC) $(FLAGS) music.c
+isjpeg.o : shell.h isjpg.c
+	$(CC) $(FLAGS) isjpeg.c
+historic.o : shell.h historic.c
+	$(CC) $(FLAGS) historic.c
+pipe.o : shell.h pipe.c
+	$(CC) $(FLAGS) pipe.c
 #blockchain.o : shell.h blockchain.c
 #	$(CC) $(FLAGS) blockchain.c -lm -lssl -lcrypto
 

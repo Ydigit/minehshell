@@ -35,3 +35,5 @@ int parse (char *ptrLinha, char **args)
   *args = (char *) NULL; // O último argumento é NULL
   return count; // Retorna o número de argumentos
 }
+
+//ver o ultimo com o & para ver o lat one, para char de bg e fg

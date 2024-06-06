@@ -26,7 +26,11 @@ int main()
     if (1 == len)
       continue; /* linha é apenas \n */
     if (linha[len - 1] == '\n')
-      linha[len - 1] = '\0';
+      //linha[len - 1] = '\0';
+      if (linha[len - 1] == '\n') linha[len - 1] = '\0';
+        add_to_history(linha);
+
+
     int numargs = parse(linha, args); /* particiona a string em argumentos */
 
     if (!builtin(args))
@@ -78,7 +82,7 @@ int builtin(char **args)
 
   if (0 == strcmp(args[0], "obterinfo"))
   {
-    printf("SoShell 2024 versaõ 1.0\n");
+    printf("SoShell 2024 versão 1.0\n");
     return 1; // comando embutido
   }
 
@@ -216,6 +220,8 @@ int builtin(char **args)
     */
 
   // *****calcula*****
+  /*
+   */
   int i = 0;
   // Este loop percorre a lista de argumentos até encontrar um NULL, que indica o fim da lista
   while (args[i] != NULL)
@@ -223,10 +229,17 @@ int builtin(char **args)
     i++;
   }
   // Se o primeiro argumento for "calc" e o número total de argumentos for 3 (incluindo o comando "calc")
-  if (0 == strcmp(args[0], "calc") && i == 3) // 0->1->2(args)
+  if (0 == strcmp(args[0], "calc") && i == 4) // 0->1->2(args)
   {
     // A função calc é chamada com os três argumentos
     calc(args[1], args[2], args[3]);
+    return 1; // Indica que um comando embutido foi executado
+  }
+
+  if (0 == strcmp(args[0], "calcularbits") && i == 4) // 0->1->2(args)
+  {
+    // A função calcularbits é chamada com os três argumentos
+    bits(args[1][0], args[2], args[3]);
     return 1; // Indica que um comando embutido foi executado
   }
 
@@ -375,6 +388,33 @@ int builtin(char **args)
     return 1; // Retorna 1 para indicar que um comando embutido foi executado
   }
 
+  if (0 == strcmp(args[0], "isjpg"))
+  {
+    int fd = open(args[1], O_RDONLY);
+    if (isjpg(fd) == 1)
+      printf("%s é um JPG\n", args[1]);
+    else
+      printf("%s não é um JPG\n", args[1]);
+    return 1;
+  }
+
+
+
+  if (strcmp(args[0], "historic") == 0) {
+        print_history();
+        return 1;
+    }
+  
+  if (strcmp(args[0], "execute_from_historic") == 0) {
+        if (args[1] == NULL) {
+            printf("usage: execute_from_history <n>\n");
+        } else {
+            int n = atoi(args[1]);
+            execute_command_from_history(n); // chamada com o localizador de índice
+        }
+        return 1;
+    }
+
   //--------------------------------ENCRY----------------------------------------------------
   //***GERAPASSI***
   // Verifica se o primeiro argumento é igual a "gerapassI"
@@ -435,15 +475,11 @@ int builtin(char **args)
 
   */
 
- /*
- Esses dados são apresentados em sequência para cada bloco na blockchain, começando com o bloco de índice 0 até o último bloco,
-  que neste caso é o bloco de índice 4. Cada bloco contém informações sobre si mesmo, o bloco anterior e seu hash. Isso garante a 
-  integridade e a imutabilidade dos dados na blockchain.
- */
-
-
-
-
+  /*
+  Esses dados são apresentados em sequência para cada bloco na blockchain, começando com o bloco de índice 0 até o último bloco,
+   que neste caso é o bloco de índice 4. Cada bloco contém informações sobre si mesmo, o bloco anterior e seu hash. Isso garante a
+   integridade e a imutabilidade dos dados na blockchain.
+  */
 
   /* IMPORTANTE :
    Devolver 0 para indicar que não existe comando embutido e que

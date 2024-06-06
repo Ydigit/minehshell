@@ -7,19 +7,48 @@
 #include <sys/wait.h>
 
 /**
- * @brief Creates a child process and executes a program.
- * 
- * This function creates a child process using fork(). If the process is the child process, 
- * it attempts to replace the current program with the one specified in args using execvp(). 
- * If execvp() fails, it prints an error message and exits. If the process is the parent, 
- * it waits for the child process to finish using wait().
- * 
- * @param numargs The number of arguments.
- * @param args The arguments.
+ * @brief Executes a command with or without pipes and handles background execution.
+ *
+ * This function processes the given command arguments to determine if the command should
+ * run in the background or foreground and checks for the presence of pipes. If a pipe is
+ * detected, it splits the arguments into two parts and calls execute_pipe() to handle the
+ * pipe execution. If no pipe is found, it proceeds to create a child process using fork().
+ * In the child process, it attempts to execute the command using execvp(). If execvp() fails,
+ * an error message is printed. The parent process waits for the child process to finish if
+ * the command is to run in the foreground. For background execution, it does not wait.
+ *
+ * @param numargs The number of arguments in the command.
+ * @param args The command arguments, including the command itself and its parameters.
  */
+
+int last(int *argc, char **args)
+{
+  if (args[*argc - 1][0] == '&')
+  {
+    (*argc)--;
+    args[*argc] = NULL;
+    return BG;
+  }
+  return FG;
+}
+
 void execute(int numargs, char **args)
 {
   int pid, status;
+  int code = last(&numargs, args);
+  // VERIFICAR PIPES NOS ARGS
+  // ls -l | grep "a"
+  for (int i = 0; i < numargs; ++i)
+  {
+    if (strcmp(args[i], "|") == 0)
+    {
+      args[i] = NULL;
+      char **args1 = args;
+      char **args2 = &args[i + 1];
+      execute_pipe(args1, args2);
+      return;
+    }
+  }
 
   if ((pid = fork()) < 0)
   {
@@ -29,24 +58,25 @@ void execute(int numargs, char **args)
 
   if (pid == 0)
   {
-    //neste
+    // neste
     numargs = redirects(numargs, args);
     execvp(*args, args);
     perror(*args);
     exit(1);
   }
-
-  while (wait(&status) != pid);
+  if (code == FG)
+    while (wait(&status) != pid)
+      ;
 
   return;
 }
 
 /**
  * @brief Checks if a file descriptor is valid.
- * 
- * This function checks if a file descriptor is valid (i.e., not negative). 
+ *
+ * This function checks if a file descriptor is valid (i.e., not negative).
  * If the file descriptor is invalid, it prints an error message and exits.
- * 
+ *
  * @param fd The file descriptor to check.
  */
 void checkfd(int fd)
@@ -62,14 +92,14 @@ void checkfd(int fd)
 
 /**
  * @brief Trata dos redirecionamentos de entrada e saída em um comando.
- * 
+ *
  * @param numargs O número de argumentos no comando.
  * @param args Os argumentos do comando.
- * 
+ *
  * Esta função verifica se o penúltimo argumento do comando é um operador de redirecionamento ("2>", ">", ">>" ou "<").
  * Se for, ela abre ou cria o arquivo especificado no último argumento e redireciona a saída de erro, a saída padrão ou a entrada padrão para esse arquivo, conforme especificado pelo operador de redirecionamento.
  * Em seguida, ela remove o operador de redirecionamento e o nome do arquivo dos argumentos do comando e atualiza o número de argumentos.
- * 
+ *
  * @return O número atualizado de argumentos no comando.
  */
 
@@ -121,7 +151,6 @@ int redirects(int numargs, char *args[])
 
   return numargs;
 }
-
 
 // dup pega o file descirptor mais baixo do sistema
 // com o dup2 garanto que  o que quero vai ser o novo file descriptor
