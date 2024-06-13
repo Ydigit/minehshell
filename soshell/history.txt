@@ -1,0 +1,7 @@
+historic
+pipe
+|
+ls -l
+ls -l | grep "a"
+la | grep "a"
+ls | grep "a"

@@ -11,7 +11,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm -lpthread #-lssl -lcrypto   # Adiciona as bibliotecas OpenSSL
-OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o calcularbits.o isjpg.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o historic.o pipe.o #isjpeg.o #blockchain.o
+OBS=main.o execute.o parse.o socp.o compare2txt.o calc.o calcularbits.o isjpg.o redirect.o threads.o ficheirosinfo.o filefunctions.o music.o historic.o pipe.o #blockchain.o
 
 all :  soshell
 
