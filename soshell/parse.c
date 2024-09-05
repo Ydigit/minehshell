@@ -20,6 +20,8 @@
 int parse (char *ptrLinha, char **args)
 {
   
+
+  
   int count = 0; // Inicializa o contador de argumentos
   while ('\0' != *ptrLinha) // Enquanto não chegar ao fim da linha de comando
     {

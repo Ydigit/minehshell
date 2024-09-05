@@ -5,3 +5,10 @@ ls -l
 ls -l | grep "a"
 la | grep "a"
 ls | grep "a"
+ls
+calc 2 + 1
+ls
+ls
+history
+history | grep
+calc 2 + 3
