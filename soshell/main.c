@@ -13,6 +13,8 @@ int main()
   char *args[64];   /* com um maximo de 64 argumentos */
 
   /****SHELNAME*****/
+
+//adicionar coisa em rust
   strcpy(prompt, "SHELL do LEO: Espeta ai um comando : $>");
   while (1)
   {
